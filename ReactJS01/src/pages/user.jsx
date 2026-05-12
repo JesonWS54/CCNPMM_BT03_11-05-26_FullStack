@@ -8,12 +8,13 @@ const UserPage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await getUserApi();
-      if (res && Array.isArray(res)) {
-        setDataSource(res);
+      // Thay đổi điều kiện check:
+      if (res && res.EC === 0) {
+        setDataSource(res.data); // Phải lấy đúng trường .data
       } else {
         notification.error({
-          message: "Unauthorized",
-          description: res.message,
+          title: "Lỗi lấy dữ liệu",
+          description: res?.message || "Unauthorized",
         });
       }
     };
